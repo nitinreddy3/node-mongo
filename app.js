@@ -1,17 +1,12 @@
+const connectDB = require('./DB/Connection')
 const express = require('express')
-
 const app = express()
+const path = require('path')
+const expressHandlebars = require('express-handlebars')
+const bodyParser = require('body-parser')
 
+connectDB();
+app.use(express.json({ extended: false }))
+app.use('/api/userModel', require('./API/User'))
 
-
-//ROUTES
-app.get('/', (req, res) => {
-  res.send('We are on home')
-})
-
-app.get('/posts', (req, res) => {
-  res.send('We are on posts')
-})
-
-//How do we start listening to the server
 app.listen(5000)
