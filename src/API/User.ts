@@ -1,15 +1,11 @@
-const express = require('express')
-const mongoose = require('mongoose')
+const expressModule = require('express')
 const User = require('../DB/User')
 
-const route = express.Router()
+const route = expressModule.Router()
 
 route.post('/', async(req, res) => {
   const { firstName, lastName } = req.body
-  let user = {}
-  user.firstName = firstName
-  user.lastName = lastName
-  let userModel = new User(user);
+  let userModel = new User({ firstName, lastName });
   await userModel.save()
   res.json(userModel);
 })
@@ -38,6 +34,26 @@ route.delete('/:id', async (req, res) => {
     res.status(500).json(`Error: ${err}`)
   })
 })
+
+route.post('/:id', async (req, res) => {
+  User.findById(req.params.id).then(user => {
+    let { firstName, lastName } = req.body;
+    console.log(user);
+    user.firstName = firstName
+    user.lastName = lastName
+    user.save()
+      .then(() => {
+      res.json('User details updated')
+      }).catch(err => {
+      res.status(400).json(`Error: ${err}`)
+    })
+
+    res.json(`Successfully updated the item`)
+  }).catch(err => {
+    res.status(500).json(`Error: ${err}`)
+  })
+})
+
 
 
 module.exports = route
