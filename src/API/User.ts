@@ -1,7 +1,6 @@
-const expressModule = require('express')
-const User = require('../DB/User')
-
-const route = expressModule.Router()
+import * as express from 'express';
+const User  = require('../DB/User');
+const route = express.Router()
 
 route.post('/', async(req, res) => {
   const { firstName, lastName } = req.body

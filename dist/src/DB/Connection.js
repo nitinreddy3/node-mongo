@@ -10,9 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
-const url = `mongodb+srv://nitin1:nitin1@cluster0-jple3.mongodb.net/test?retryWrites=true&w=majority`;
+const dbUser = 'nitin1';
+const dbPassword = 'nitin1';
+const dbConnection = (user, pass) => {
+    return `mongodb+srv://${user}:${pass}@cluster0-jple3.mongodb.net/test?retryWrites=true&w=majority`;
+};
+let database = dbConnection(dbUser, dbPassword);
 const connectDBModule = () => __awaiter(void 0, void 0, void 0, function* () {
-    yield mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true });
+    yield mongoose.connect(database, { useUnifiedTopology: true, useNewUrlParser: true });
     console.log('DB connected..!');
 });
 exports.default = connectDBModule;
